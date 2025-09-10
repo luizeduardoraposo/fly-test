@@ -98,3 +98,24 @@ function spawnObstacle() {
     });
   } else if (type < 0.7) {
     // Prédio
+    obstacles.push({
+      kind: 'building',
+      x: Math.random() * (width - 60),
+      y: -120,
+      w: 40 + Math.random() * 40,
+      h: 120 + Math.random() * 80,
+      speed: player.speed
+    });
+  } else {
+    // Avião inimigo
+    obstacles.push({
+      kind: 'enemy',
+      x: Math.random() * (width - 40),
+      y: -60,
+      w: 40,
+      h: 40,
+      speed: player.speed + 2
+    });
+  }
+}
+
