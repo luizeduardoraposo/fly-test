@@ -15,3 +15,28 @@ window.addEventListener('resize', () => {
   canvas.height = height;
 });
 
+// Assets simples (pode ser melhorado depois)
+function drawPlane(x, y, invulnerable) {
+  ctx.save();
+  if (invulnerable) {
+    ctx.globalAlpha = 0.5;
+  }
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - 20, y + 40);
+  ctx.lineTo(x + 20, y + 40);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawMountain(x, y, w, h) {
+  ctx.fillStyle = '#556b2f';
+  ctx.beginPath();
+  ctx.moveTo(x, y + h);
+  ctx.lineTo(x + w / 2, y);
+  ctx.lineTo(x + w, y + h);
+  ctx.closePath();
+  ctx.fill();
+}
