@@ -119,3 +119,30 @@ function spawnObstacle() {
   }
 }
 
+function spawnPowerUp() {
+  const type = Math.random() < 0.5 ? 'speed' : 'invuln';
+  powerUps.push({
+    x: Math.random() * (width - 40) + 20,
+    y: -30,
+    type,
+    speed: player.speed
+  });
+}
+
+function update() {
+  if (gameOver) return;
+  // Movimento do player
+  if (keys['ArrowLeft'] || keys['a']) player.x -= 8;
+  if (keys['ArrowRight'] || keys['d']) player.x += 8;
+  if (keys['ArrowUp'] || keys['w']) player.y -= 6;
+  if (keys['ArrowDown'] || keys['s']) player.y += 6;
+  // Limites
+  player.x = Math.max(30, Math.min(width - 30, player.x));
+  player.y = Math.max(30, Math.min(height - 60, player.y));
+
+  // Obstáculos
+  for (let o of obstacles) {
+    o.y += o.speed;
+  }
+  obstacles = obstacles.filter(o => o.y < height + 100);
+
