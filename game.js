@@ -187,3 +187,27 @@ function update() {
       player.invulnerable = false;
     }
   }
+  // Score
+  score++;
+}
+
+let obstacleTimer = 0;
+let powerUpTimer = 0;
+
+function draw() {
+  ctx.clearRect(0, 0, width, height);
+  // Céu
+  ctx.fillStyle = '#87ceeb';
+  ctx.fillRect(0, 0, width, height);
+  // Player
+  drawPlane(player.x, player.y, player.invulnerable);
+  // Obstáculos
+  for (let o of obstacles) {
+    if (o.kind === 'mountain') drawMountain(o.x, o.y, o.w, o.h);
+    else if (o.kind === 'building') drawBuilding(o.x, o.y, o.w, o.h);
+    else if (o.kind === 'enemy') drawEnemyPlane(o.x + o.w / 2, o.y);
+  }
+  // PowerUps
+  for (let p of powerUps) {
+    drawPowerUp(p.x, p.y, p.type);
+  }
