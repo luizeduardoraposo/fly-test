@@ -211,3 +211,36 @@ function draw() {
   for (let p of powerUps) {
     drawPowerUp(p.x, p.y, p.type);
   }
+  // Score
+  ctx.fillStyle = '#222';
+  ctx.font = 'bold 32px Arial';
+  ctx.fillText('Score: ' + score, 30, 50);
+  if (gameOver) {
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 60px Arial';
+    ctx.fillText('GAME OVER', width / 2 - 180, height / 2);
+    ctx.font = 'bold 32px Arial';
+    ctx.fillText('Pressione R para reiniciar', width / 2 - 180, height / 2 + 60);
+  }
+}
+
+function gameLoop() {
+  update();
+  draw();
+  if (!gameOver) {
+    obstacleTimer++;
+    powerUpTimer++;
+    if (obstacleTimer > 30) {
+      spawnObstacle();
+      obstacleTimer = 0;
+    }
+    if (powerUpTimer > 180) {
+      spawnPowerUp();
+      powerUpTimer = 0;
+    }
+  }
+  requestAnimationFrame(gameLoop);
+}
+
