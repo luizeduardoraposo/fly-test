@@ -55,3 +55,14 @@ function drawEnemyPlane(x, y) {
   ctx.closePath();
   ctx.fill();
 }
+
+function drawPowerUp(x, y, type) {
+  ctx.save();
+  if (type === 'speed') ctx.fillStyle = '#0f0';
+  else ctx.fillStyle = '#ff0';
+  ctx.beginPath();
+  ctx.arc(x, y, 15, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.restore();
+}
+
