@@ -40,3 +40,18 @@ function drawMountain(x, y, w, h) {
   ctx.closePath();
   ctx.fill();
 }
+
+function drawBuilding(x, y, w, h) {
+  ctx.fillStyle = '#888';
+  ctx.fillRect(x, y, w, h);
+}
+
+function drawEnemyPlane(x, y) {
+  ctx.fillStyle = '#f00';
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - 15, y + 30);
+  ctx.lineTo(x + 15, y + 30);
+  ctx.closePath();
+  ctx.fill();
+}
