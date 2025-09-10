@@ -80,3 +80,21 @@ let score = 0;
 let gameOver = false;
 let keys = {};
 
+// Controles
+window.addEventListener('keydown', e => keys[e.key] = true);
+window.addEventListener('keyup', e => keys[e.key] = false);
+
+function spawnObstacle() {
+  const type = Math.random();
+  if (type < 0.4) {
+    // Montanha
+    obstacles.push({
+      kind: 'mountain',
+      x: Math.random() * (width - 120),
+      y: -100,
+      w: 120 + Math.random() * 80,
+      h: 100 + Math.random() * 60,
+      speed: player.speed
+    });
+  } else if (type < 0.7) {
+    // Prédio
