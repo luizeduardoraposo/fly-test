@@ -66,3 +66,17 @@ function drawPowerUp(x, y, type) {
   ctx.restore();
 }
 
+// Objetos do jogo
+let player = {
+  x: width / 2,
+  y: height - 120,
+  speed: 6,
+  invulnerable: false,
+  invulnTimer: 0
+};
+let obstacles = [];
+let powerUps = [];
+let score = 0;
+let gameOver = false;
+let keys = {};
+
