@@ -146,3 +146,44 @@ function update() {
   }
   obstacles = obstacles.filter(o => o.y < height + 100);
 
+  // PowerUps
+  for (let p of powerUps) {
+    p.y += p.speed;
+  }
+  powerUps = powerUps.filter(p => p.y < height + 40);
+
+  // Colisão obstáculos
+  for (let o of obstacles) {
+    if (
+      player.x > o.x - 30 && player.x < o.x + o.w + 30 &&
+      player.y > o.y - 30 && player.y < o.y + o.h + 30
+    ) {
+      if (!player.invulnerable) {
+        gameOver = true;
+      }
+    }
+  }
+  // Colisão powerup
+  for (let i = powerUps.length - 1; i >= 0; i--) {
+    let p = powerUps[i];
+    if (
+      player.x > p.x - 35 && player.x < p.x + 35 &&
+      player.y > p.y - 35 && player.y < p.y + 35
+    ) {
+      if (p.type === 'speed') {
+        player.speed += 2;
+        setTimeout(() => player.speed -= 2, 4000);
+      } else if (p.type === 'invuln') {
+        player.invulnerable = true;
+        player.invulnTimer = 180;
+      }
+      powerUps.splice(i, 1);
+    }
+  }
+  // Invulnerabilidade
+  if (player.invulnerable) {
+    player.invulnTimer--;
+    if (player.invulnTimer <= 0) {
+      player.invulnerable = false;
+    }
+  }
