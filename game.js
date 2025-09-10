@@ -244,3 +244,19 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
+window.addEventListener('keydown', e => {
+  if (gameOver && (e.key === 'r' || e.key === 'R')) {
+    // Reiniciar
+    player.x = width / 2;
+    player.y = height - 120;
+    player.speed = 6;
+    player.invulnerable = false;
+    player.invulnTimer = 0;
+    obstacles = [];
+    powerUps = [];
+    score = 0;
+    gameOver = false;
+  }
+});
+
+gameLoop();
