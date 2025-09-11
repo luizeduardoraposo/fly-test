@@ -250,4 +250,5 @@ window.addEventListener('DOMContentLoaded', function () {
       engine.resize();
     });
   // ...restante do código do jogo segue normalmente usando apenas os assets acima...
+  });
 });
