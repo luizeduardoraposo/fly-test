@@ -16,14 +16,19 @@
       height: 540px;
       display: block;
       margin: 0 auto;
-      background: #222;
+      background: #fff !important;
+      border: 2px solid red;
     }
   </style>
 </head>
 
 <body>
+  <div style="text-align:center;color:red;font-size:22px;">Se você vê este texto, o HTML está carregando normalmente.
+  </div>
+  <div id="js-status" style="text-align:center;color:green;font-size:20px;"></div>
   <canvas id="renderCanvas"></canvas>
   <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://cdn.babylonjs.com/loaders/babylon.glTF2FileLoader.js"></script>
   <script src="game-babylon.js"></script>
 </body>
 
