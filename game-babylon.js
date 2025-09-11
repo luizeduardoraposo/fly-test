@@ -1,3 +1,23 @@
+
+// ===============================
+// Como usar modelos 3D reais no jogo:
+//
+// 1. Baixe arquivos .glb gratuitos/open source para nave, montanha, prédio e árvore.
+//    Sugestões:
+//      Nave:     https://quaternius.com/packs/spaceships.html (ex: SpaceshipA.glb)
+//      Montanha: https://kenney.nl/assets/nature-kit         (ex: SM_Mountain.glb)
+//      Prédio:   https://kenney.nl/assets/city-kit           (ex: SM_BuildingA.glb)
+//      Árvore:   https://kenney.nl/assets/nature-kit         (ex: SM_TreePine.glb)
+//
+// 2. Coloque os arquivos na pasta meshes/ do projeto, renomeando para:
+//      spaceship.glb
+//      mountain.glb
+//      building.glb
+//      tree.glb
+//
+// 3. O jogo carregará automaticamente esses modelos. Se não encontrar, usará formas básicas.
+// ===============================
+
 // Jogo 3D de nave espacial estilo corrida infinita com Babylon.js
 // Controles: setas para mover, Z/X/C para atirar
 // Assets: nave estilizada, efeitos de tiro, terreno procedural
@@ -37,12 +57,17 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 
   // Carregar nave, montanha, prédio, árvore (ou usar primitiva)
+  async function loadShip() {
+    let mesh = await loadOrPrimitive('spaceship.glb', () => BABYLON.MeshBuilder.CreateBox('shipFallback', { size: 2 }, scene));
+    if (mesh) return mesh;
+    return loadOrPrimitive('ship.glb', () => BABYLON.MeshBuilder.CreateBox('shipFallback', { size: 2 }, scene));
+  }
   Promise.all([
-    loadOrPrimitive('ship.glb', () => BABYLON.MeshBuilder.CreateBox('shipFallback', { size: 2 }, scene)),
+    loadShip(),
     loadOrPrimitive('mountain.glb', () => BABYLON.MeshBuilder.CreateSphere('mountainFallback', { diameter: 4 }, scene)),
     loadOrPrimitive('building.glb', () => BABYLON.MeshBuilder.CreateBox('buildingFallback', { size: 3 }, scene)),
     loadOrPrimitive('tree.glb', () => BABYLON.MeshBuilder.CreateCylinder('treeFallback', { height: 4, diameter: 1 }, scene))
-  ]).then(function([shipAsset, mountainAsset, buildingAsset, treeAsset]) {
+  ]).then(function ([shipAsset, mountainAsset, buildingAsset, treeAsset]) {
     // ...restante do código do jogo, igual antes, usando shipAsset, mountainAsset, buildingAsset, treeAsset...
 
     // ...existing code...
@@ -249,6 +274,6 @@ window.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', function () {
       engine.resize();
     });
-  // ...restante do código do jogo segue normalmente usando apenas os assets acima...
+    // ...restante do código do jogo segue normalmente usando apenas os assets acima...
   });
 });
