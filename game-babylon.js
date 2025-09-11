@@ -21,13 +21,29 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // Pré-carregar todos os assets depois de criar a cena
   // Carregar assets válidos do Babylon.js Asset Library
-  // Não usar mais assets externos. Usar apenas primitivos Babylon.js
-  if (jsStatus) jsStatus.textContent = 'Jogo iniciado! (modo primitivo)';
-  console.log('Jogo iniciado! (modo primitivo)');
-  var shipAsset = BABYLON.MeshBuilder.CreateBox('shipFallback', { size: 2 }, scene);
-  var mountainAsset = BABYLON.MeshBuilder.CreateSphere('mountainFallback', { diameter: 4 }, scene);
-  var buildingAsset = BABYLON.MeshBuilder.CreateBox('buildingFallback', { size: 3 }, scene);
-  var treeAsset = BABYLON.MeshBuilder.CreateCylinder('treeFallback', { height: 4, diameter: 1 }, scene);
+  // Tenta carregar assets locais, se existirem. Se não, usa primitivos.
+  if (jsStatus) jsStatus.textContent = 'Jogo iniciado! (primitivo/local)';
+  console.log('Jogo iniciado! (primitivo/local)');
+
+  // Função utilitária para tentar carregar um asset local, senão retorna primitiva
+  async function loadOrPrimitive(filename, fallbackFn) {
+    try {
+      const result = await BABYLON.SceneLoader.ImportMeshAsync("", "./meshes/", filename, scene);
+      if (result.meshes && result.meshes[0]) return result.meshes[0];
+    } catch (e) {
+      console.warn('Asset local não encontrado:', filename, 'usando primitiva.');
+    }
+    return fallbackFn();
+  }
+
+  // Carregar nave, montanha, prédio, árvore (ou usar primitiva)
+  Promise.all([
+    loadOrPrimitive('ship.glb', () => BABYLON.MeshBuilder.CreateBox('shipFallback', { size: 2 }, scene)),
+    loadOrPrimitive('mountain.glb', () => BABYLON.MeshBuilder.CreateSphere('mountainFallback', { diameter: 4 }, scene)),
+    loadOrPrimitive('building.glb', () => BABYLON.MeshBuilder.CreateBox('buildingFallback', { size: 3 }, scene)),
+    loadOrPrimitive('tree.glb', () => BABYLON.MeshBuilder.CreateCylinder('treeFallback', { height: 4, diameter: 1 }, scene))
+  ]).then(function([shipAsset, mountainAsset, buildingAsset, treeAsset]) {
+    // ...restante do código do jogo, igual antes, usando shipAsset, mountainAsset, buildingAsset, treeAsset...
 
     // ...existing code...
 
